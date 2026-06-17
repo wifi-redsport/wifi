@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Canje de Premio</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    max-width:600px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:20px;
+    margin-top:20px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+}
+
+button{
+    padding:10px 20px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+<body>
+
+<h1>🎁 Canje de Premio</h1>
+
+<div id="contenido">
+Cargando...
+</div>
+
+<script>
+
+const API =
+"https://script.google.com/macros/s/AKfycbyxoiVS-zmHQyJH_Dxc5wnvzYNQKSwjkNieUbbZvA3LlIwHq5UZbhuxVWLISGVekOfY_Q/exec";
+
+const token =
+new URLSearchParams(
+    window.location.search
+).get("token");
+
+if(!token){
+
+    document.getElementById(
+        "contenido"
+    ).innerHTML =
+    `
+    <h2>📷 Escaneá el QR del premio</h2>
+    <p>
+    Este portal debe abrirse desde
+    el código QR entregado al ganador.
+    </p>
+    `;
+
+}else{
+
+    buscar();
+
+}
+
+async function buscar(){
+
+    const response =
+    await fetch(API,{
+        method:"POST",
+        body:new URLSearchParams({
+            action:"buscar_token",
+            token:token
+        })
+    });
+
+    const data =
+    await response.json();
+
+    console.log(data);
+
+    if(!data.encontrado){
+
+        document.getElementById(
+            "contenido"
+        ).innerHTML =
+        "<h2>❌ Token inválido</h2>";
+
+        return;
+    }
+
+    if(data.estado === "CANJEADO"){
+
+        document.getElementById(
+            "contenido"
+        ).innerHTML =
+        `
+        <h2>⚠️ Premio ya canjeado</h2>
+        <p>
+        Fecha:
+        ${new Date(data.fecha_canje).toLocaleString(
+            "es-AR",
+            {
+                timeZone: "America/Argentina/Buenos_Aires",
+                day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+            }
+        )}
+        </p>
+        `;
+
+        return;
+    }
+
+    document.getElementById(
+        "contenido"
+    ).innerHTML =
+    `
+    <div class="card">
+
+        <h2>${data.premio}</h2>
+
+        <p>
+        Cliente:
+        ${data.email}
+        </p>
+
+        <input
+            id="email"
+            value="${data.email}"
+        >
+
+        <button onclick="canjear()">
+            Confirmar Canje
+        </button>
+
+    </div>
+    `;
+}
+
+async function canjear(){
+
+    const email =
+    document.getElementById(
+        "email"
+    ).value;
+
+    const response =
+    await fetch(API,{
+        method:"POST",
+        body:new URLSearchParams({
+
+            action:
+            "canjear_token",
+
+            token:
+            token,
+
+            email:
+            email
+
+        })
+    });
+
+    const data =
+    await response.json();
+
+    if(data.canjeado){
+
+        alert(
+            "Premio canjeado"
+        );
+
+        location.reload();
+    }
+}
+
+</script>
+
+</body>
+</html>
