@@ -48,7 +48,7 @@ Cargando...
 const API =
 "https://script.google.com/macros/s/AKfycbyxoiVS-zmHQyJH_Dxc5wnvzYNQKSwjkNieUbbZvA3LlIwHq5UZbhuxVWLISGVekOfY_Q/exec";
 
-const token =
+let token =
 new URLSearchParams(
     window.location.search
 ).get("token");
@@ -215,12 +215,10 @@ function abrirToken(){
         return;
     }
 
-    window.location.href =
-    "?token=" +
-    encodeURIComponent(
-        tokenIngresado
-    );
-}    
+    token = tokenIngresado;
+
+    buscar();
+}
     
 async function buscar(){
 
