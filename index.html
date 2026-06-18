@@ -506,6 +506,16 @@ async function canjear(){
     const data =
     await response.json();
 
+    if(!data.ok){
+
+        alert(
+            data.error ||
+            "Error"
+        );
+
+        return;
+    }
+
     if(data.canjeado){
 
         alert(
