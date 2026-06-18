@@ -347,14 +347,21 @@ async function canjear(){
         method:"POST",
         body:new URLSearchParams({
 
-            action:
-            "canjear_token",
+            action:"canjear_token",
 
-            token:
-            token,
+            token:token,
 
-            email:
-            email
+            email:nuevoEmail,
+
+            vendedor:
+            sessionStorage.getItem(
+                "vendedor"
+            ),
+
+            sucursal:
+            sessionStorage.getItem(
+                "sucursal"
+            )
 
         })
     });
