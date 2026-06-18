@@ -341,6 +341,44 @@ async function buscar(){
         return;
     }
 
+    const sucursalLogueada =
+sessionStorage.getItem(
+    "sucursal"
+);
+
+if(
+    data.sucursal &&
+    data.sucursal !== sucursalLogueada
+){
+
+    document.getElementById(
+        "contenido"
+    ).innerHTML =
+    `
+    <div class="card"
+    style="
+        text-align:center;
+        margin-top:80px;
+    ">
+        <h2>
+        🚫 Sucursal incorrecta
+        </h2>
+
+        <p>
+        Este premio pertenece a la sucursal:
+        <b>${data.sucursal}</b>
+        </p>
+
+        <p>
+        Estás logueado en:
+        <b>${sucursalLogueada}</b>
+        </p>
+    </div>
+    `;
+
+    return;
+}
+
     if(data.estado === "CANJEADO"){
 
         document.getElementById(
