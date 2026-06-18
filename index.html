@@ -53,27 +53,146 @@ new URLSearchParams(
     window.location.search
 ).get("token");
 
-if(!token){
+mostrarLogin();
+
+function mostrarLogin(){
 
     document.getElementById(
         "contenido"
     ).innerHTML =
     `
-    <h2>📷 Escaneá el QR del premio</h2>
-    <p>
-    Este portal debe abrirse desde
-    el código QR entregado al ganador.
-    </p>
+    <div class="card">
+
+        <h2>🔐 Acceso Vendedor</h2>
+
+        <input
+            id="usuario"
+            placeholder="Usuario"
+        >
+
+        <br><br>
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Contraseña"
+        >
+
+        <br><br>
+
+        <input
+            id="vendedor"
+            placeholder="Nombre del vendedor"
+        >
+
+        <br><br>
+
+        <button onclick="login()">
+            Ingresar
+        </button>
+
+    </div>
     `;
-
-}else{
-
-    buscar();
-
 }
+
+async function login(){
+
+    const usuario =
+    document.getElementById(
+        "usuario"
+    ).value.trim();
+
+    const password =
+    document.getElementById(
+        "password"
+    ).value.trim();
+
+    const vendedor =
+    document.getElementById(
+        "vendedor"
+    ).value.trim();
+
+    if(
+        !usuario ||
+        !password ||
+        !vendedor
+    ){
+        alert(
+            "Completá todos los campos"
+        );
+        return;
+    }
+
+    const response =
+    await fetch(API,{
+        method:"POST",
+        body:new URLSearchParams({
+            action:"login",
+            usuario,
+            password
+        })
+    });
+
+    const data =
+    await response.json();
+
+    console.log(data);
+
+    if(!data.login){
+
+        alert(
+            "Usuario o contraseña incorrectos"
+        );
+
+        return;
+    }
+
+    sessionStorage.setItem(
+        "usuario",
+        usuario
+    );
+
+    sessionStorage.setItem(
+        "sucursal",
+        data.sucursal
+    );
+
+    sessionStorage.setItem(
+        "vendedor",
+        vendedor
+    );
+
+    if(token){
+
+        buscar();
+
+    }else{
+
+        document.getElementById(
+            "contenido"
+        ).innerHTML =
+        `
+        <h2>📷 Escaneá el QR del premio</h2>
+
+        <p>
+        Ingresá mediante el QR
+        entregado al cliente.
+        </p>
+        `;
+    }
+}    
 
 async function buscar(){
 
+    if(
+        !sessionStorage.getItem(
+            "usuario"
+        )
+    ){
+        mostrarLogin();
+        return;
+    }
+    
     const response =
     await fetch(API,{
         method:"POST",
