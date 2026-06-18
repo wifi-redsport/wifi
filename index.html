@@ -168,20 +168,60 @@ async function login(){
 
     }else{
 
-        document.getElementById(
-            "contenido"
-        ).innerHTML =
-        `
-        <h2>📷 Escaneá el QR del premio</h2>
+    document.getElementById(
+        "contenido"
+    ).innerHTML =
+`
+    <h2>📷 Escaneá el QR del premio</h2>
 
-        <p>
-        Ingresá mediante el QR
-        entregado al cliente.
-        </p>
-        `;
+    <p>
+    Ingresá mediante el QR
+    entregado al cliente.
+    </p>
+
+    <input
+        id="tokenManual"
+        placeholder="Pegar token manualmente"
+        style="
+            width:100%;
+            padding:12px;
+            margin-top:15px;
+            border-radius:10px;
+        "
+    >
+
+    <br><br>
+
+    <button onclick="abrirToken()">
+        Buscar Premio
+    </button>
+    `;
     }
 }    
 
+function abrirToken(){
+
+    const tokenIngresado =
+    document.getElementById(
+        "tokenManual"
+    ).value.trim();
+
+    if(!tokenIngresado){
+
+        alert(
+            "Ingresá un token"
+        );
+
+        return;
+    }
+
+    window.location.href =
+    "?token=" +
+    encodeURIComponent(
+        tokenIngresado
+    );
+}    
+    
 async function buscar(){
 
     if(
