@@ -53,7 +53,59 @@ new URLSearchParams(
     window.location.search
 ).get("token");
 
-mostrarLogin();
+if(
+    sessionStorage.getItem(
+        "usuario"
+    )
+){
+
+    if(token){
+
+        buscar();
+
+    }else{
+
+        mostrarPortal();
+
+    }
+
+}else{
+
+    mostrarLogin();
+
+}
+
+function mostrarPortal(){
+
+    document.getElementById(
+        "contenido"
+    ).innerHTML =
+`
+    <h2>📷 Escaneá el QR del premio</h2>
+
+    <p>
+    Ingresá mediante el QR
+    entregado al cliente.
+    </p>
+
+    <input
+        id="tokenManual"
+        placeholder="Pegar token manualmente"
+        style="
+            width:100%;
+            padding:12px;
+            margin-top:15px;
+            border-radius:10px;
+        "
+    >
+
+    <br><br>
+
+    <button onclick="abrirToken()">
+        Buscar Premio
+    </button>
+`;
+}
 
 function mostrarLogin(){
 
@@ -168,34 +220,8 @@ async function login(){
 
     }else{
 
-    document.getElementById(
-        "contenido"
-    ).innerHTML =
-`
-    <h2>📷 Escaneá el QR del premio</h2>
+        mostrarPortal();
 
-    <p>
-    Ingresá mediante el QR
-    entregado al cliente.
-    </p>
-
-    <input
-        id="tokenManual"
-        placeholder="Pegar token manualmente"
-        style="
-            width:100%;
-            padding:12px;
-            margin-top:15px;
-            border-radius:10px;
-        "
-    >
-
-    <br><br>
-
-    <button onclick="abrirToken()">
-        Buscar Premio
-    </button>
-    `;
     }
 }    
 
