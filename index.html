@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -7,7 +10,6 @@ name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>Canje de Premio</title>
-
 <style>
 
 body{
@@ -92,9 +94,9 @@ button:hover{
 </head>
 <body>
 
-<div class="card">
-    🎁 Canje de Premio 🎁
-</div>
+<h1 class="titulo">
+🎁 Canje de Premio 🎁
+</h1>
 
 <div id="contenido">
 Cargando...
@@ -174,17 +176,10 @@ function mostrarLogin(){
 
         <h2>🔐 Acceso Vendedor</h2>
 
-        input{
-            width:100%;
-            max-width:100%;
-            padding:14px;
-            margin-top:10px;
-            border:1px solid #ccc;
-            border-radius:10px;
-            box-sizing:border-box;
-            font-size:16px;
-            display:block;
-        }
+        <input
+            id="usuario"
+            placeholder="Usuario"
+        >
 
         <br><br>
 
@@ -203,20 +198,9 @@ function mostrarLogin(){
 
         <br><br>
 
-        button{
-            width:100%;
-            max-width:100%;
-            padding:14px;
-            margin-top:15px;
-            border:none;
-            border-radius:10px;
-            background:#0d6efd;
-            color:white;
-            font-size:16px;
-            font-weight:bold;
-            cursor:pointer;
-            box-sizing:border-box;
-        }
+        <button onclick="login()">
+            Ingresar
+        </button>
 
     </div>
     `;
