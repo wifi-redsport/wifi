@@ -159,6 +159,17 @@ function mostrarPortal(){
                 Buscar Premio
             </button>
 
+            <p style="
+                text-align:center;
+                color:#666;
+                margin-top:20px;
+                line-height:1.6;
+            ">
+                👤 ${sessionStorage.getItem("vendedor")}
+                <br>
+                🏪 ${sessionStorage.getItem("sucursal")}
+            </p>
+
             <button
             onclick="logout()"
             style="
