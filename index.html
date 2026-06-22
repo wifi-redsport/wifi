@@ -352,7 +352,21 @@ async function buscar(){
         document.getElementById(
             "contenido"
         ).innerHTML =
-        "<h2>❌ Token inválido</h2>";
+        `
+        <div class="card" style="text-align:center;">
+            <h2>❌ Token inválido</h2>
+
+            <button
+                onclick="mostrarPortal()"
+                style="
+                    background:#6c757d;
+                    margin-top:20px;
+                "
+            >
+                ← Volver
+            </button>
+        </div>
+        `;
 
         return;
     }
@@ -389,6 +403,17 @@ if(
         Estás logueado en:
         <b>${sucursalLogueada}</b>
         </p>
+
+        <button
+            onclick="mostrarPortal()"
+            style="
+                background:#6c757d;
+                margin-top:20px;
+            "
+        >
+            ← Volver
+        </button>
+        
     </div>
     `;
 
@@ -456,9 +481,19 @@ if(
                 )}
             </p>
 
+        <button
+            onclick="mostrarPortal()"
+            style="
+                background:#6c757d;
+                margin-top:20px;
+            "
+        >
+            ← Volver
+        </button>
+        
         </div>
         `;
-
+    
         return;
     }
 
@@ -482,6 +517,16 @@ if(
 
         <button onclick="canjear()">
             Confirmar Canje
+        </button>
+
+        <button
+            onclick="mostrarPortal()"
+            style="
+                background:#6c757d;
+                margin-top:10px;
+            "
+        >
+            ← Volver
         </button>
 
     </div>
