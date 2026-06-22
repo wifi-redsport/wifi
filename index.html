@@ -141,7 +141,35 @@ function mostrarPortal(){
         "contenido"
     ).innerHTML =
 `
-    <h2>📷 Escaneá el QR del premio</h2>
+        <div class="card">
+
+            <button
+            onclick="logout()"
+            style="
+                background:#dc3545;
+                margin-bottom:20px;
+            ">
+                🚪 Cerrar sesión
+            </button>
+
+            <h2>📷 Escaneá el QR del premio</h2>
+
+            <p>
+            Ingresá mediante el QR
+            entregado al cliente.
+            </p>
+
+            <input
+                id="tokenManual"
+                placeholder="Pegar token manualmente"
+            >
+
+            <button onclick="abrirToken()">
+                Buscar Premio
+            </button>
+
+        </div>
+    `;
 
     <p>
     Ingresá mediante el QR
@@ -524,6 +552,15 @@ async function canjear(){
 
         location.reload();
     }
+}
+
+function logout(){
+
+    sessionStorage.clear();
+
+    token = null;
+
+    mostrarLogin();
 }
 
 </script>
