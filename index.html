@@ -343,39 +343,20 @@ function abrirToken(){
 
 async function iniciarScanner(){
 
+    document.getElementById(
+        "reader"
+    ).innerHTML = "";
+
+    const html5QrCode =
+    new Html5Qrcode("reader");
+
     try{
 
-        const cameras =
-        await Html5Qrcode.getCameras();
-
-        console.log(
-            "CAMARAS:",
-            cameras
-        );
-
-        if(
-            !cameras ||
-            cameras.length === 0
-        ){
-            alert(
-                "No se encontraron cámaras"
-            );
-            return;
-        }
-
-        const cameraId =
-        cameras[0].id;
-
-        const html5QrCode =
-        new Html5Qrcode(
-            "reader"
-        );
-
         await html5QrCode.start(
-            cameraId,
+            { facingMode: "environment" },
             {
-                fps:10,
-                qrbox:250
+                fps: 10,
+                qrbox: 250
             },
             (decodedText)=>{
 
@@ -386,6 +367,9 @@ async function iniciarScanner(){
 
                 html5QrCode.stop();
 
+            },
+            (errorMessage)=>{
+                // ignorar
             }
         );
 
@@ -394,7 +378,8 @@ async function iniciarScanner(){
         console.error(err);
 
         alert(
-            err.message || err
+            "Error iniciando cámara: " +
+            err
         );
 
     }
