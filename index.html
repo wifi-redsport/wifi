@@ -343,60 +343,22 @@ function abrirToken(){
 
 async function iniciarScanner(){
 
-    document.getElementById("reader").innerHTML = "";
-
-    const html5QrCode = new Html5Qrcode("reader");
-
-    const devices = await Html5Qrcode.getCameras();
-
-    if (!devices || devices.length === 0) {
-        alert("No se encontraron cámaras");
-        return;
-    }
-
-    // buscar cámara trasera
-    let cameraId = devices[0].id;
-
-    for (let d of devices) {
-        if (
-            d.label.toLowerCase().includes("back") ||
-            d.label.toLowerCase().includes("trasera") ||
-            d.label.toLowerCase().includes("rear")
-        ) {
-            cameraId = d.id;
+    const scanner =
+    new Html5QrcodeScanner(
+        "reader",
+        {
+            fps: 10,
+            qrbox: 250
         }
-    }
+    );
 
-    const config = {
-        fps: 12,
-        qrbox: (w, h) => Math.min(w, h) * 0.8,
-        aspectRatio: 1.0
-    };
+    scanner.render(
+        (decodedText)=>{
 
-    console.log("Scanner iniciado");
-    
-    html5QrCode.start(
-        cameraId,
-        config,
-        (decodedText) => {
-
-            console.log("QR:", decodedText);
-
-            html5QrCode.stop();
-
-            alert("QR leído:\n" + decodedText);
-
-            token = decodedText;
-            buscar();
-
-        },
-        (errorMessage) => {
-
-            if (
-                errorMessage.includes("NotFound")
-            ) return;
-
-            console.log(errorMessage);
+            alert(
+                "LEIDO: " +
+                decodedText
+            );
 
         }
     );
