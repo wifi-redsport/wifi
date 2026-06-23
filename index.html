@@ -341,42 +341,56 @@ function abrirToken(){
     buscar();
 }
 
-let scanner;
-
-function iniciarScanner(){
+async function iniciarScanner(){
 
     document.getElementById("reader").innerHTML = "";
 
-    scanner = new Html5QrcodeScanner(
-        "reader",
-        {
-            fps: 10,
-            qrbox: (w, h) => Math.min(w, h) * 0.7,
-            experimentalFeatures: {
-                useBarCodeDetectorIfSupported: true
-            }
+    const html5QrCode = new Html5Qrcode("reader");
+
+    const devices = await Html5Qrcode.getCameras();
+
+    if (!devices || devices.length === 0) {
+        alert("No se encontraron cámaras");
+        return;
+    }
+
+    // buscar cámara trasera
+    let cameraId = devices[0].id;
+
+    for (let d of devices) {
+        if (
+            d.label.toLowerCase().includes("back") ||
+            d.label.toLowerCase().includes("trasera") ||
+            d.label.toLowerCase().includes("rear")
+        ) {
+            cameraId = d.id;
+        }
+    }
+
+    const config = {
+        fps: 10,
+        qrbox: (w, h) => Math.min(w, h) * 0.7
+    };
+
+    html5QrCode.start(
+        cameraId,
+        config,
+        (decodedText) => {
+
+            console.log("QR:", decodedText);
+
+            html5QrCode.stop();
+
+            alert("QR leído:\n" + decodedText);
+
+            token = decodedText;
+            buscar();
+
         },
-        false
+        (errorMessage) => {
+            console.log("Scan error:", errorMessage);
+        }
     );
-
-    scanner.render(onScanSuccess, onScanError);
-}
-
-function onScanSuccess(decodedText, decodedResult) {
-
-    console.log("QR detectado:", decodedText);
-
-    alert("QR leído:\n" + decodedText);
-
-    scanner.clear(); // apaga cámara
-
-    token = decodedText;
-
-    buscar(); // tu flujo actual
-}
-
-function onScanError(errorMessage) {
-    console.log("Scan error:", errorMessage);
 }
     
 async function buscar(){
