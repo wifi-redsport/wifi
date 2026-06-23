@@ -342,19 +342,26 @@ function abrirToken(){
 function iniciarScanner(){
 
     const scanner =
-    new Html5Qrcode(
-        "reader"
-    );
+    new Html5Qrcode("reader");
 
     scanner.start(
         {
             facingMode:"environment"
         },
         {
-            fps:10,
-            qrbox:250
+            fps:15,
+            qrbox:{
+                width:250,
+                height:250
+            },
+            aspectRatio:1
         },
         (textoQR)=>{
+
+            console.log(
+                "QR LEIDO:",
+                textoQR
+            );
 
             scanner.stop();
 
@@ -374,8 +381,13 @@ function iniciarScanner(){
             }
 
             buscar();
+
         },
-        ()=>{}
+        (error)=>{
+
+            console.log(error);
+
+        }
     );
 }
     
