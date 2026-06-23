@@ -103,8 +103,6 @@ Canje de Premio <br>
 Cargando...
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
-
 <script>
 
 const API =
@@ -145,13 +143,8 @@ function mostrarPortal(){
 `
         <div class="card">
 
-            <h2>📷 Escaneá el QR del premio</h2>
-
-            <p>
-            Ingresá mediante el QR
-            entregado al cliente.
-            </p>
-
+            <h2>💻 Carga el codigo del premio</h2>
+            
             <input
                 id="tokenManual"
                 placeholder="Pegar token manualmente"
@@ -160,16 +153,7 @@ function mostrarPortal(){
             <button onclick="abrirToken()">
                 Buscar Premio
             </button>
-
-            <button
-            onclick="iniciarScanner()"
-            style="
-                background:#198754;
-            "
-            >
-            📷 Escanear QR
-            </button>
-
+            
             <div
             id="reader"
             style="
@@ -339,29 +323,6 @@ function abrirToken(){
     token = tokenIngresado;
 
     buscar();
-}
-
-async function iniciarScanner(){
-
-    const scanner =
-    new Html5QrcodeScanner(
-        "reader",
-        {
-            fps: 10,
-            qrbox: 250
-        }
-    );
-
-    scanner.render(
-        (decodedText)=>{
-
-            alert(
-                "LEIDO: " +
-                decodedText
-            );
-
-        }
-    );
 }
     
 async function buscar(){
