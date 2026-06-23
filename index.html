@@ -343,44 +343,42 @@ function abrirToken(){
 
 async function iniciarScanner(){
 
-    document.getElementById(
-        "reader"
-    ).innerHTML = "";
+    document.getElementById("reader").innerHTML = "";
 
-    const html5QrCode =
-    new Html5Qrcode("reader");
+    const html5QrCode = new Html5Qrcode("reader");
 
-    try{
+    const config = {
+        fps: 10,
+        qrbox: (w, h) => Math.min(w, h) * 0.7,
+        experimentalFeatures: {
+            useBarCodeDetectorIfSupported: true
+        }
+    };
+
+    try {
 
         await html5QrCode.start(
             { facingMode: "environment" },
-            {
-                fps: 10,
-                qrbox: 250
-            },
-            (decodedText)=>{
+            config,
+            (decodedText) => {
 
-                alert(
-                    "QR leído:\n" +
-                    decodedText
-                );
+                console.log("QR detectado:", decodedText);
 
-                html5QrCode.stop();
+                html5QrCode.stop().then(() => {
+                    alert("QR leído:\n" + decodedText);
+                });
 
             },
-            (errorMessage)=>{
-                // ignorar
+            (errorMessage) => {
+                console.log("Scan error:", errorMessage);
             }
         );
 
-    }catch(err){
+    } catch (err) {
 
         console.error(err);
 
-        alert(
-            "Error iniciando cámara: " +
-            err
-        );
+        alert("Error iniciando cámara: " + err);
 
     }
 }
