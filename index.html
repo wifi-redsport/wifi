@@ -368,8 +368,9 @@ async function iniciarScanner(){
     }
 
     const config = {
-        fps: 10,
-        qrbox: (w, h) => Math.min(w, h) * 0.7
+        fps: 12,
+        qrbox: (w, h) => Math.min(w, h) * 0.8,
+        aspectRatio: 1.0
     };
 
     html5QrCode.start(
