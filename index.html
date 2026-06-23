@@ -159,6 +159,23 @@ function mostrarPortal(){
                 Buscar Premio
             </button>
 
+            <button
+            onclick="iniciarScanner()"
+            style="
+                background:#198754;
+            "
+            >
+            📷 Escanear QR
+            </button>
+
+            <div
+            id="reader"
+            style="
+                width:100%;
+                margin-top:15px;
+            ">
+            </div>
+
             <p style="
                 text-align:center;
                 color:#666;
@@ -320,6 +337,46 @@ function abrirToken(){
     token = tokenIngresado;
 
     buscar();
+}
+
+function iniciarScanner(){
+
+    const scanner =
+    new Html5Qrcode(
+        "reader"
+    );
+
+    scanner.start(
+        {
+            facingMode:"environment"
+        },
+        {
+            fps:10,
+            qrbox:250
+        },
+        (textoQR)=>{
+
+            scanner.stop();
+
+            try{
+
+                const url =
+                new URL(textoQR);
+
+                token =
+                url.searchParams.get(
+                    "token"
+                );
+
+            }catch{
+
+                token = textoQR;
+            }
+
+            buscar();
+        },
+        ()=>{}
+    );
 }
     
 async function buscar(){
@@ -598,5 +655,7 @@ function logout(){
 
 </script>
 
+<script src="https://unpkg.com/html5-qrcode"></script>
+    
 </body>
 </html>
