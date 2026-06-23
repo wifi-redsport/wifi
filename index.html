@@ -373,6 +373,8 @@ async function iniciarScanner(){
         aspectRatio: 1.0
     };
 
+    console.log("Scanner iniciado");
+    
     html5QrCode.start(
         cameraId,
         config,
@@ -389,7 +391,13 @@ async function iniciarScanner(){
 
         },
         (errorMessage) => {
-            console.log("Scan error:", errorMessage);
+
+            if (
+                errorMessage.includes("NotFound")
+            ) return;
+
+            console.log(errorMessage);
+
         }
     );
 }
