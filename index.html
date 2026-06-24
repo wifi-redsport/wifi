@@ -263,9 +263,15 @@ async function login(){
         !password ||
         !vendedor
     ){
+
+        btn.disabled = false;
+        btn.innerText =
+        "Ingresar";
+
         alert(
             "Completá todos los campos"
         );
+
         return;
     }
 
@@ -285,6 +291,10 @@ async function login(){
     console.log(data);
 
     if(!data.login){
+
+        btn.disabled = false;
+        btn.innerText =
+        "Ingresar";
 
         alert(
             "Usuario o contraseña incorrectos"
