@@ -221,7 +221,10 @@ function mostrarLogin(){
 
         <br><br>
 
-        <button onclick="login()">
+        <button
+            id="btnLogin"
+            onclick="login()"
+        >
             Ingresar
         </button>
 
@@ -231,6 +234,15 @@ function mostrarLogin(){
 
 async function login(){
 
+    const btn =
+    document.getElementById(
+        "btnLogin"
+    );
+
+    btn.disabled = true;
+    btn.innerText =
+    "⏳ Ingresando...";
+    
     const usuario =
     document.getElementById(
         "usuario"
