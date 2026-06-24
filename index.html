@@ -206,11 +206,33 @@ function mostrarLogin(){
 
         <br><br>
 
-        <input
-            id="password"
-            type="password"
-            placeholder="Contraseña"
-        >
+        <div style="
+            position:relative;
+        ">
+            <input
+                id="password"
+                type="password"
+                placeholder="Contraseña"
+                style="
+                    padding-right:45px;
+                "
+            >
+
+            <span
+                onclick="togglePassword()"
+                style="
+                    position:absolute;
+                    right:15px;
+                    top:50%;
+                    transform:translateY(-50%);
+                    cursor:pointer;
+                    user-select:none;
+                    font-size:18px;
+                "
+            >
+                👁️
+            </span>
+        </div>
 
         <br><br>
 
@@ -329,6 +351,26 @@ async function login(){
     }
 }    
 
+function togglePassword(){
+
+    const input =
+    document.getElementById(
+        "password"
+    );
+
+    if(
+        input.type === "password"
+    ){
+
+        input.type = "text";
+
+    }else{
+
+        input.type = "password";
+
+    }
+}
+    
 function abrirToken(){
 
     const btn =
