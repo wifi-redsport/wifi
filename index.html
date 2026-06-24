@@ -150,7 +150,10 @@ function mostrarPortal(){
                 placeholder="Pegar token manualmente"
             >
 
-            <button onclick="abrirToken()">
+            <button
+                id="btnBuscar"
+                onclick="abrirToken()"
+            >
                 Buscar Premio
             </button>
             
@@ -306,6 +309,15 @@ async function login(){
 
 function abrirToken(){
 
+    const btn =
+    document.getElementById(
+        "btnBuscar"
+    );
+
+    btn.disabled = true;
+    btn.innerText =
+    "⏳ Buscando...";
+    
     const tokenIngresado =
     document.getElementById(
         "tokenManual"
@@ -519,7 +531,10 @@ if(
             value="${data.email}"
         >
 
-        <button onclick="canjear()">
+        <button
+            id="btnCanjear"
+            onclick="canjear()"
+        >
             Confirmar Canje
         </button>
 
@@ -539,6 +554,15 @@ if(
 
 async function canjear(){
 
+    const btn =
+    document.getElementById(
+        "btnCanjear"
+    );
+
+    btn.disabled = true;
+    btn.innerText =
+    "⏳ Procesando...";
+    
     const email =
     document.getElementById(
         "email"
@@ -548,6 +572,10 @@ async function canjear(){
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(!emailRegex.test(email)){
+
+        btn.disabled = false;
+        btn.innerText =
+        "Confirmar Canje";
 
         alert(
             "Ingresá un email válido"
@@ -584,6 +612,10 @@ async function canjear(){
     await response.json();
 
     if(!data.ok){
+
+        btn.disabled = false;
+        btn.innerText =
+        "Confirmar Canje";
 
         alert(
             data.error ||
