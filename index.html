@@ -515,6 +515,7 @@ if(
 
         <input
             id="email"
+            type="email"
             value="${data.email}"
         >
 
@@ -541,7 +542,19 @@ async function canjear(){
     const email =
     document.getElementById(
         "email"
-    ).value;
+    ).value.trim();
+
+    const emailRegex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(!emailRegex.test(email)){
+
+        alert(
+            "Ingresá un email válido"
+        );
+
+        return;
+    }
 
     const response =
     await fetch(API,{
