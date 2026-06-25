@@ -238,8 +238,12 @@ function mostrarLogin(){
 
         <input
             id="vendedor"
+            list="listaEmpleados"
             placeholder="Nombre del vendedor"
         >
+
+        <datalist id="listaEmpleados">
+        </datalist>
 
         <br><br>
 
@@ -252,8 +256,55 @@ function mostrarLogin(){
 
     </div>
     `;
+    cargarEmpleados();
 }
 
+async function cargarEmpleados(){
+
+    try{
+
+        const response =
+        await fetch(API,{
+            method:"POST",
+            body:new URLSearchParams({
+                action:"obtener_empleados"
+            })
+        });
+
+        const data =
+        await response.json();
+
+        if(!data.ok) return;
+
+        const lista =
+        document.getElementById(
+            "listaEmpleados"
+        );
+
+        lista.innerHTML = "";
+
+        data.empleados.forEach(nombre=>{
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+            option.value = nombre;
+
+            lista.appendChild(
+                option
+            );
+
+        });
+
+    }catch(err){
+
+        console.error(err);
+
+    }
+}
+    
 async function login(){
 
     const btn =
