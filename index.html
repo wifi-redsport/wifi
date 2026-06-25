@@ -331,6 +331,32 @@ async function login(){
         "vendedor"
     ).value.trim();
 
+    const opciones =
+[
+    ...document.querySelectorAll(
+        "#listaEmpleados option"
+    )
+].map(
+    o => o.value
+);
+
+if(
+    !opciones.includes(
+        vendedor
+    )
+){
+
+    btn.disabled = false;
+    btn.innerText =
+    "Ingresar";
+
+    alert(
+        "Seleccioná un vendedor válido de la lista"
+    );
+
+    return;
+}
+
     if(
         !usuario ||
         !password ||
